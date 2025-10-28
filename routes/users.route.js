@@ -15,7 +15,7 @@ router.get('/google', passport.authenticate('google', { scope: ['profile', 'emai
 router.get(
   '/google/callback',
   passport.authenticate('google', { session: false }),
-  googleAuthMiddleware // ✅ our middleware handles redirec
+  googleAuthMiddleware //  our middlewar handle redirect
 );
 
 export default router;

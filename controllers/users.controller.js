@@ -95,26 +95,59 @@ export const resetPasswordRequest = async (req, res) => {
 
 
 
+// export const resetPassword = async (req, res) => {
+//   const { token } = req.params;        // token from URL
+//   const { password } = req.body;       // new password
+
+//   try {
+//     // 1️⃣ Find user by token and ensure token hasn't expired
+//     const user = await User.findOne({
+//       resetPasswordToken: token,
+//       resetPasswordExpires: { $gt: Date.now() }, // greater than current time
+//     });
+
+//     if (!user) {
+//       return res.status(400).json({ message: "Invalid or expired token" });
+//     }
+
+//     // 2️⃣ Hash new password before saving
+//     const hashedPassword = await bcrypt.hash(password, 10);
+
+//     // 3️⃣ Update user password & clear token fields
+//     user.password = hashedPassword;
+//     user.resetPasswordToken = undefined;
+//     user.resetPasswordExpires = undefined;
+
+//     await user.save();
+
+//     res.status(200).json({ message: "Password reset successfully!" });
+//   } catch (error) {
+//     console.error(error);
+//     res.status(500).json({ message: "Server error", error: error.message });
+//   }
+// };
+
+
+
 export const resetPassword = async (req, res) => {
-  const { token } = req.params;        // token from URL
-  const { password } = req.body;       // new password
+  const { token } = req.params;   // token from URL
+  const { password } = req.body;  // new password
 
   try {
     // 1️⃣ Find user by token and ensure token hasn't expired
     const user = await User.findOne({
       resetPasswordToken: token,
-      resetPasswordExpires: { $gt: Date.now() }, // greater than current time
+      resetPasswordExpires: { $gt: Date.now() },
     });
 
     if (!user) {
       return res.status(400).json({ message: "Invalid or expired token" });
     }
 
-    // 2️⃣ Hash new password before saving
-    const hashedPassword = await bcrypt.hash(password, 10);
+    // 2️⃣ Just assign plain password — schema will hash it automatically
+    user.password = password;
 
-    // 3️⃣ Update user password & clear token fields
-    user.password = hashedPassword;
+    // 3️⃣ Clear token fields
     user.resetPasswordToken = undefined;
     user.resetPasswordExpires = undefined;
 
@@ -122,11 +155,8 @@ export const resetPassword = async (req, res) => {
 
     res.status(200).json({ message: "Password reset successfully!" });
   } catch (error) {
-    console.error(error);
+    console.error("Reset password error:", error);
     res.status(500).json({ message: "Server error", error: error.message });
   }
 };
-
-
-
 

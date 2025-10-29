@@ -36,7 +36,7 @@ passport.use(
           }
         }
 
-        // ✅ Generate JWT token directly here
+        //  Generate JWT token directly here
         const token = jwt.sign(
           { id: user._id, email: user.email },
           process.env.JWT_SECRET,

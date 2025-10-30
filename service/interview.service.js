@@ -55,11 +55,11 @@ export async function seedInterviewQuestions() {
 
   for (const entry of data) {
     await InterviewQuestion.findOneAndUpdate(
-      { discipline: entry.discipline }, // match
-      entry,                            // update with new data
-      { upsert: true, new: true }       // insert if not found
+      { discipline: entry.discipline },
+      entry,                            
+      { upsert: true, new: true }      
     );
   }
 
-  console.log("✅ Interview questions synced with DB");
+  console.log(" Interview questions synced with DB");
 }

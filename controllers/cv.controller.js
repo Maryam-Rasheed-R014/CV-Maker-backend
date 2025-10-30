@@ -1,6 +1,6 @@
 import fs from "fs";
 import OpenAI from "openai";
-
+import { PDFParse } from "pdf-parse";
 const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY,
 });
@@ -12,11 +12,13 @@ export async function extractCVData(req, res) {
     }
 
   
-    const { default: pdfParse } = await import("pdf-parse");
+  
 
-    const pdfBuffer = fs.readFileSync(req.file.path);
-    const pdfData = await pdfParse(pdfBuffer);
-    const cvText = pdfData.text;
+  const pdfBuffer = fs.readFileSync(req.file.path);
+  // pdf-parse v2 exposes the PDFParse class — instantiate and call getText()
+  const parser = new PDFParse({ data: pdfBuffer });
+  const pdfData = await parser.getText();
+  const cvText = pdfData.text;
 
     const response = await openai.chat.completions.create({
       model: "gpt-4o-mini",
@@ -46,7 +48,8 @@ export async function extractCVData(req, res) {
       data: aiExtractedData,
     });
 
-    fs.unlinkSync(req.file.path);
+  if (typeof parser?.destroy === "function") await parser.destroy();
+  fs.unlinkSync(req.file.path);
   } catch (error) {
     console.error("Error processing CV:", error);
     res.status(500).json({ message: "Failed to process CV" });

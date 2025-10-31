@@ -1,3 +1,4 @@
+import jwt from "jsonwebtoken";
 import User from "../models/auth.model.js";    
 import bcrypt from "bcrypt";
 import nodemailer from "nodemailer";
@@ -37,8 +38,25 @@ export  const loginUser = async (req, res) => {
         if (!isMatch) {
             return res.status(400).json({ message: "Invalid email or password" });
         }
-        res.status(200).json({ message: "Login successful" });
-    }
+           const payload = {
+      userId: user._id,
+      email: user.email,
+      name: user.firstName,
+      
+    };
+
+    // 🔹 Generate token (expires in 7 days)
+    const token = jwt.sign(payload, process.env.JWT_SECRET, {
+      expiresIn: "7d",
+    });
+          res.status(200).json({
+      message: "Login successful",
+      token,
+     
+    });
+
+  }
+    
     catch (error) {
         res.status(500).json({ message: "Server error", error: error.message });
     }           

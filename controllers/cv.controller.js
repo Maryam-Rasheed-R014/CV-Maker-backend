@@ -75,17 +75,7 @@ try {
 }
        const atsResult = calculateATS(aiExtractedData, jobDescription);
 
-    //  Save to DB
-  //   const newCvRecord = new CvData({
-  //     userId,
-  //     email,
-  //     ...aiExtractedData,
-  //    extractedData: aiExtractedData,
-  //     atsScore: atsResult.ATS_Score
-  //   });
-
-  
-  // await newCvRecord.save();
+   
    const updatedCvRecord = await CvData.findOneAndUpdate(
       { userId }, // condition
       {

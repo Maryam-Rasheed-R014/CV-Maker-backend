@@ -59,7 +59,5 @@ export function calculateATS(extractedData, jobDescription) {
 
   return {
     ATS_Score: score,
-
-   
-  };
+};
 }

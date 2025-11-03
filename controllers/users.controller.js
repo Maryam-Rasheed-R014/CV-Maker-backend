@@ -70,20 +70,20 @@ export const resetPasswordRequest = async (req, res) => {
   const { email } = req.body;
 
   try {
-    // 1️⃣ Check if user exists
+    // 1 Check if user exists
     const user = await User.findOne({ email });
     if (!user) return res.status(404).json({ message: "User not found" });
 
-    // 2️⃣ Create reset token
+    // 2️ Create reset token
     const resetToken = crypto.randomBytes(20).toString("hex");
     user.resetPasswordToken = resetToken;
     user.resetPasswordExpires = Date.now() + 3600000; // 1 hour
     await user.save();
 
-    // 3️⃣ Create reset link
+    // 3️ Create reset link
     const resetLink = `http://localhost:5173/reset-password/${resetToken}`;
 
-    // 4️⃣ Define email content
+    // 4️ Define email content
     const mailOptions = {
       from: `"CV Maker" <${process.env.EMAIL_USER}>`,
       to: user.email,

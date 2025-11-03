@@ -9,6 +9,7 @@ import userRoutes from "./routes/users.route.js";
 import interviewRoutes from "./routes/interview.route.js";
 import { seedInterviewQuestions } from "./service/interview.service.js";
 import cvRoutes from "./routes/cv.route.js";
+import jobRoutes from "./routes/jobs.route.js";
 
 
 dotenv.config();
@@ -41,9 +42,9 @@ mongoose.connection.once("open", async () => {
 app.use("/auth", userRoutes);
 app.use("/interview", interviewRoutes);
 app.use("/cv", cvRoutes);
-
+app.use("/jobs", jobRoutes);
 
 // Start server
 app.listen(PORT, () => {
-  console.log(`✅ Server is running on port ${PORT}`);
+  console.log(`Server is running on port ${PORT}`);
 });

@@ -1,9 +1,13 @@
 import Jobs from "../models/jobs.model.js";
 export const createJob = async (req, res) => {
   try {
-    const { jobTitle, vacancies, jobType, salary } = req.body;
+    const { jobTitle, companyName, location, jobDescription, requirements, vacancies, jobType, salary } = req.body;
     const newJob = new Jobs({
       jobTitle,
+      companyName,
+      location,
+      jobDescription,
+      requirements,
       vacancies,
       jobType,
       salary,
@@ -37,12 +41,16 @@ export const getAllJobs = async (req, res) => {
 export const updateJob = async (req, res)=>{
     try{
         const {id}=req.params;
-        const {jobTitle, vacancies, jobType, salary}= req.body; 
+        const {jobTitle, companyName, location, jobDescription, requirements, vacancies, jobType, salary}= req.body; 
         const update= await Jobs.findByIdAndUpdate({
             _id:id
         },
         {   
             jobTitle,
+            companyName,
+            location,
+            jobDescription,
+            requirements,
             vacancies,
             jobType,
             salary,

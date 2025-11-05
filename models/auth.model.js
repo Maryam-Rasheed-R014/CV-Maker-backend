@@ -36,6 +36,10 @@ const userSchema = new mongoose.Schema({
         return !this.googleId;
       },
     },
+    isAdmin: {
+    type: Boolean,
+    default: false,
+    },
       resetPasswordToken: String,
       
   resetPasswordExpires: Date,

@@ -10,6 +10,8 @@ import interviewRoutes from "./routes/interview.route.js";
 import { seedInterviewQuestions } from "./service/interview.service.js";
 import cvRoutes from "./routes/cv.route.js";
 import jobRoutes from "./routes/jobs.route.js";
+import appliedJobsRoutes from "./routes/appliedJobs.route.js";
+import feedbackRoutes from "./routes/feedback.route.js";
 
 
 dotenv.config();
@@ -43,6 +45,8 @@ app.use("/auth", userRoutes);
 app.use("/interview", interviewRoutes);
 app.use("/cv", cvRoutes);
 app.use("/jobs", jobRoutes);
+app.use("/applications", appliedJobsRoutes);
+app.use("/feedback", feedbackRoutes);
 
 // Start server
 app.listen(PORT, () => {

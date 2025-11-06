@@ -2,7 +2,9 @@ import mongoose from "mongoose";
 
 const connectDB = async () => {
   try {
-    await mongoose.connect("mongodb+srv://maryamrasheed690_db_user:maryam123@cluster0.yeurfyw.mongodb.net/CVMaker", {
+    // await mongoose.connect("mongodb+srv://maryamrasheed690_db_user:maryam123@cluster0.yeurfyw.mongodb.net/CVMaker", {
+
+   await mongoose.connect("mongodb+srv://sadaf-11:K3roUJIZTeXmtMYt@cluster0.sg5i7uw.mongodb.net/CVMaker", {
       useNewUrlParser: true,
       useUnifiedTopology: true,
     });
